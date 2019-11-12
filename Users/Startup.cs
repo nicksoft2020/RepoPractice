@@ -6,14 +6,14 @@ using Domain.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.SpaServices.Webpack;
+//using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProjectDb.EF;
 using ProjectDb.Initial;
 using ProjectDb.Storage;
-
+using Microsoft.Extensions.Hosting;
 namespace Users
 {
     public class Startup
@@ -50,7 +50,7 @@ namespace Users
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             using (var scope = app.ApplicationServices.CreateScope())
             {
@@ -78,12 +78,16 @@ namespace Users
             app.UseStatusCodePages();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseRouting(); // added
             app.UseCors(builder => builder.WithOrigins("http://localhost:4200"));
-            app.UseMvc(routes  =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=home}/{action=index}/{id?}");
+            //app.UseMvc(routes  =>
+            //{
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{controller=home}/{action=index}/{id?}");
+            //});
+            app.UseEndpoints(endpoints => {
+                endpoints.MapControllers();
             });
         }
     }
