@@ -16,6 +16,7 @@ var AppComponent = /** @class */ (function () {
         this.total = 0; // Total users.
         this.active = 0; // Active users.
         this.user = new User(); // The value of user.
+        this.tableMode = true; // Table
     }
     // Initialization data.
     AppComponent.prototype.ngOnInit = function () {
@@ -46,9 +47,24 @@ var AppComponent = /** @class */ (function () {
     // Saving modified user.
     AppComponent.prototype.save = function () {
         var _this = this;
-        this.dataService.updateUser(this.user)
-            .subscribe(function (data) { return _this.loadUsers(); });
+        if (this.user.id == null) {
+        }
+        else {
+            this.dataService.updateUser(this.user)
+                .subscribe(function (data) { return _this.loadUsers(); });
+            //this.user = new User();
+        }
+        this.cancel();
+    };
+    // To beginner state
+    AppComponent.prototype.cancel = function () {
         this.user = new User();
+        this.tableMode = true;
+    };
+    // Opens template for adding new user
+    AppComponent.prototype.addUser = function () {
+        this.cancel();
+        this.tableMode = false;
     };
     // Updating data.
     AppComponent.prototype.changeStatus = function (u) {
@@ -67,4 +83,10 @@ var AppComponent = /** @class */ (function () {
     return AppComponent;
 }());
 export { AppComponent };
+//export class AppComponent {
+//    constructor(private customService: CustomService) { }
+//    public get isLoggedIn$(): Observable<boolean> {
+//        return this.customService.isLoggedIn$();
+//    }
+//}
 //# sourceMappingURL=app.component.js.map

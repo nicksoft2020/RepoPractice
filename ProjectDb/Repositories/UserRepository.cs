@@ -29,6 +29,22 @@ namespace ProjectDb.Repositories
         }
 
         /// <summary>
+        /// Creating data.
+        /// </summary>
+        /// <param name="item">new item</param>
+        /// <returns>true if item was created else returns false</returns>
+        public async Task<bool> Create(User item)
+        {
+            if(item != null)
+            {
+                await db.Users.AddAsync(item);
+                await db.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Getting users
         /// </summary>
         /// <returns>Users</returns>

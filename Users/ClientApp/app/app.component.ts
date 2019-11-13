@@ -1,6 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { DataService } from './data.service';
+import { DataService, CustomService } from './data.service';
 import { User } from './users';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app',
@@ -9,10 +10,11 @@ import { User } from './users';
 })
 
 export class AppComponent implements OnInit {
-    users: User[];          // The list of users.
-    total: number = 0;      // Total users.
-    active: number = 0;     // Active users.
-    user: User = new User();// The value of user.
+    users: User[];              // The list of users.
+    total: number = 0;          // Total users.
+    active: number = 0;         // Active users.
+    user: User = new User();    // The value of user.
+    tableMode: boolean = true;  // Table
 
     constructor(private dataService: DataService) { }
 
@@ -46,9 +48,27 @@ export class AppComponent implements OnInit {
 
     // Saving modified user.
     save() {
-        this.dataService.updateUser(this.user)
-            .subscribe(data => this.loadUsers());
+        if (this.user.id == null) {
+
+        } else {
+            this.dataService.updateUser(this.user)
+                .subscribe(data => this.loadUsers());
+            //this.user = new User();
+        }
+        this.cancel();
+        
+    }
+
+    // To beginner state
+    cancel() {
         this.user = new User();
+        this.tableMode = true;
+    }
+
+    // Opens template for adding new user
+    addUser() {
+        this.cancel();
+        this.tableMode = false;
     }
 
     // Updating data.
@@ -58,3 +78,10 @@ export class AppComponent implements OnInit {
         this.save();
     } 
 }
+
+//export class AppComponent {
+//    constructor(private customService: CustomService) { }
+//    public get isLoggedIn$(): Observable<boolean> {
+//        return this.customService.isLoggedIn$();
+//    }
+//}

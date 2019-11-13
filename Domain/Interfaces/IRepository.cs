@@ -21,8 +21,15 @@ namespace Domain.Interfaces
         /// <summary>
         /// Updating data
         /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
+        /// <param name="item">changed item</param>
+        /// <returns>true if item was updated aele returns false</returns>
         Task<bool> Update(T item);
+
+        /// <summary>
+        /// Creating data.
+        /// </summary>
+        /// <param name="item">new item</param>
+        /// <returns>true if item was createdd aele returns false</returns>
+        Task<bool> Create(T item);
     }
 }

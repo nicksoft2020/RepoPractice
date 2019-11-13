@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 var DataService = /** @class */ (function () {
     function DataService(http) {
         this.http = http;
@@ -18,9 +19,13 @@ var DataService = /** @class */ (function () {
     DataService.prototype.getUsers = function () {
         return this.http.get(this.url);
     };
-    // Updating users.
+    // Updating user.
     DataService.prototype.updateUser = function (user) {
         return this.http.put(this.url + '/' + user.id, user);
+    };
+    // creating user.
+    DataService.prototype.createUser = function (user) {
+        return this.http.post(this.url, user);
     };
     DataService = __decorate([
         Injectable(),
@@ -29,4 +34,15 @@ var DataService = /** @class */ (function () {
     return DataService;
 }());
 export { DataService };
+var CustomService = /** @class */ (function () {
+    function CustomService() {
+        this._sourceUserLoggedIn = new BehaviorSubject(false);
+        this.isLoggedIn$ = this._sourceUserLoggedIn.asObservable();
+    }
+    CustomService.prototype.setLoggedIn = function (value) {
+        //this._sourceUserLoggedIn.emit(value);
+    };
+    return CustomService;
+}());
+export { CustomService };
 //# sourceMappingURL=data.service.js.map

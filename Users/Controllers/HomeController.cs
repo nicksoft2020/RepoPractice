@@ -20,9 +20,9 @@ namespace Users.Controllers
         private IUnitOfWork repository;    // Repository value.
 
         /// <summary>
-        /// 
+        /// Constructor for HomeController.
         /// </summary>
-        /// <param name="iunit"></param>
+        /// <param name="iunit">object of repository</param>
         public HomeController(IUnitOfWork iunit)
         {
             if (iunit != null)
@@ -36,13 +36,29 @@ namespace Users.Controllers
         }
 
         /// <summary>
+        /// Adding new user to repository.
+        /// </summary>
+        /// <param name="user">ne user's object.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> AddUser([FromBody] User user)
+        {
+            if (ModelState.IsValid)
+            {
+                await repository.Users.Create(user);
+                return Ok(user);
+            }
+            return BadRequest(user);
+        }
+
+        /// <summary>
         /// Getting the flist of users from database.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         public async Task<IEnumerable<User>> GetUsersList()
         {
-            List<User> users = (List<User>) await repository.Users.GetAllAsync();
+            List<User> users = (List<User>)await repository.Users.GetAllAsync();
             return users;
         }
 

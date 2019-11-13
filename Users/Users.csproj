@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+    <AssemblyName>Users</AssemblyName>
+    <RootNamespace>Users</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,16 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
     <ProjectReference Include="..\ProjectDb\ProjectDb.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Domain">
-      <HintPath>..\Domain\bin\Debug\netcoreapp2.1\Domain.dll</HintPath>
-    </Reference>
-    <Reference Include="ProjectDb">
-      <HintPath>..\ProjectDb\bin\Debug\netcoreapp2.1\ProjectDb.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>
